@@ -11,7 +11,7 @@
 		<span class="navbar-toggler-icon"></span>
 		</button>
 
-		<div class="collapse navbar-collapse">
+		<div class="collapse navbar-collapse navbar-static-top">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
 				<a class="nav-link" href="#">Home</a>
@@ -20,7 +20,47 @@
 			</ul>
 		</div>
 	</nav>
+	<div id="vue-app" class="container">
+		<div class="jumbotron">
+			<h1 class="text-center">Data</h1>
+			<hr>
+			<div v-show:bind="album.length > 0" >
+				
+				<strong class="text-success">[[ album.length ]] Obtained from server</strong>
+				<a href="#" class="btn btn-success btn-sm" v-on:click="showAlbum()">[[ toggleAlbum ]]</a>
+				<hr>
+				<div v-show="toggleAlbum == 'Hide'">
+					<div class="row">
+						<div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+							<div class="row">
+								<div v-for="photo in album" v-cloak class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
+									
+									<div class="card mb-3">
+										<h3 class="card-header">Photo [[ photo.id ]]</h3>
+										<div class="card-body">
+											<h5 class="card-title">[[ photo.title ]]</h5>
+										</div>
+										<img style="height: 150px; width: 100%; align-content: center; display: block;" :src="photo.thumbnailUrl" alt="Card image">
+										<div class="card-body">
+										<a :href="photo.url" class="card-link">Full Image</a>
+										<!-- <a href="#" class="card-link">Another link</a> -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<strong v-show:bind="album.length <= 0">No data obtained from server yet</strong>
+		</div>
+		
+	</div>
 
 </body>
 <script type="text/javascript" src="../static/js/lib/vue.js"></script>
+<script type="text/javascript" src="../static/js/lib/socketio.min.js"></script>
+<script type="text/javascript" src="../static/js/lib/vue-resource.min.js"></script>
+<!-- <script type="text/javascript" src="../static/js/lib/vue-socket-io.min.js"></script> -->
+<script type="text/javascript" src="../static/js/app.js"></script>
 </html>
