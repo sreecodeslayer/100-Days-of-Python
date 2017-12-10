@@ -10,25 +10,22 @@ class Name(object):
 			self.client = MongoClient(self.host)
 
 			self.collection = self.client['FIRST_NAMES']['as_of_12_Dec_2017']
-			print(self.collection)
 		else:
 			self.client = MongoClient(host=self.host, port=self.port)
 
 			self.collection = self.client['FIRST_NAMES']['as_of_12_Dec_2017']
-			print(self.collection)
 		pass
 
 	def getName(self, starts_with='A', meaning=None, gender=None):
 		query = {'name':{'$regex':'^%s'%starts_with.capitalize() }}
 
 		if meaning:
-			q_string = re.compile()
+			q_string = re.compile('%s'%meaning)
 			query['means'] = {'$in':[q_string]}
 
-		if gender.capitalize() in ['Male','Female','Unisex']:
-			query['gender'] = gender.capitalize()
-
-		print(">>> ", query)
+		if gender:
+			if gender.capitalize() in ['Boy','Girl','Unisex']:
+				query['gender'] = gender.capitalize()
 		cur = self.collection.find(query)
 		count = cur.count()
 		result = json_util.dumps(cur)
