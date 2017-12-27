@@ -37,7 +37,7 @@ class Address(ME.Document):
 	type = ME.StringField(default='home')
 	zip_postal = ME.StringField()
 	phone = ME.StringField()
-	uid = ME.UUIDField(default=uuid4, binary=False)
+	aid = ME.UUIDField(default=uuid4, binary=False)
 
 	meta = {
 		'strict':False
