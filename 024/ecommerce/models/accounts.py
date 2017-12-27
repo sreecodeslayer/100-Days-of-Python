@@ -25,3 +25,20 @@ class User(ME.Document):
 
 	def verifypaswd(self, password):
 		return gen_pass.verify(password, self.passwd)
+
+class Address(ME.Document):
+	user = ME.ReferenceField(User)
+	full_name = ME.StringField(required=True)
+	house_flat = ME.StringField(required=True)
+	street_locality = ME.StringField(required=True)
+	city_town = ME.StringField(required=True)
+	country = ME.StringField(required=True)
+	landmark = ME.StringField()
+	type = ME.StringField(default='home')
+	zip_postal = ME.StringField()
+	phone = ME.StringField()
+	uid = ME.UUIDField(default=uuid4, binary=False)
+
+	meta = {
+		'strict':False
+	}
