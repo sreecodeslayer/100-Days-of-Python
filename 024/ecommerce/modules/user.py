@@ -153,3 +153,12 @@ class Address(Resource):
 
 	def delete(self):
 		pass
+
+
+
+def authorize_access_key(key, role='customer'):
+	try:
+		user = UserModel.objects.get(access_key = key, role=role)
+		return True
+	except DoesNotExist:
+		return False

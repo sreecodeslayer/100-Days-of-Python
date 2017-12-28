@@ -12,6 +12,7 @@ class User(ME.Document):
 	passwd = ME.StringField()
 	username = ME.StringField()
 	access_key = ME.StringField(default = uuid4().hex)
+	role = ME.StringField(max_length=10, default='customer')
 	joined_on = ME.DateTimeField(
 		default=datetime.utcnow() + timedelta(hours=5, minutes=30))
 
@@ -19,6 +20,9 @@ class User(ME.Document):
 		'strict': False,
 		'indexes':['email', 'access_key']
 	}
+
+	def setrole(self, role):
+		self.role = role
 
 	def setpasswd(self, password):
 		self.passwd = gen_pass.hash(password)

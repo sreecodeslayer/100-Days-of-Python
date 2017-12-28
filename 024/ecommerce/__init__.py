@@ -3,6 +3,7 @@ from flask_restful import Api
 from ecommerce import settings as SETTINGS
 from ecommerce.modules.user import User,Users
 from ecommerce.modules.user import Address#,Addresses
+from ecommerce.modules.product import Product
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_envvar('ECOMMERCE')
@@ -19,3 +20,5 @@ api.add_resource(Users, '/api/users')
 
 api.add_resource(Address, '/api/address')
 # api.add_resource(Addresses, '/api/addresses')
+
+api.add_resource(Product, '/api/product')
