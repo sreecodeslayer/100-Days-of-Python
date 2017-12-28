@@ -122,3 +122,38 @@ class Product(Resource):
 
 			return jsonify(message = "Product updated!")
 
+
+class Products(Resource):
+	def get(self):
+		try:
+			page_num = int(request.args.get('page',1))
+			per_page = int(request.args.get('per_page',6))
+			pds = ProductModel.objects.paginate(page=page_num, per_page=per_page)
+
+			_products = pds.items
+			total = pds.total
+			total_pages = pds.pages
+			current_page = pds.page
+
+			next_page = pds.next_num
+			prev_page = pds.prev_num
+
+			products = []
+			for product in _products:
+				sellers = [{'email':s.email,'name':s.username} for s in product.sellers]
+				p = product.to_mongo().to_dict()
+				p['sellers'] = sellers
+				p['available_stock'] = product.available_stock if product.available_stock < 5 else True
+				p.pop('_id')
+				products.append(p)
+
+			return jsonify(
+				products=products,
+				total=total,
+				total_pages=total_pages,
+				next_page=next_page,
+				prev_page=prev_page
+			)
+
+		except Exception as e:
+			raise e
