@@ -58,6 +58,7 @@ class Product(Resource):
 				pd = ProductModel(name = name)
 				pd.available_stock = available_stock
 				pd.price = price
+				pd.pid = str(b16encode(uuid4().bytes),encoding='utf-8')
 				pd.desc = desc
 				pd.sellers = sellers
 				pd.image_urls = image_urls
