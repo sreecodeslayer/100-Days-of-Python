@@ -9,10 +9,7 @@ ME = SETTINGS.ME
 
 class Product(ME.Document):
 	name = ME.StringField()
-	pid = ME.StringField(
-		default = str(b16encode(
-			uuid4().bytes),encoding='utf-8')
-		)
+	pid = ME.StringField()
 	desc = ME.StringField()
 	available_stock = ME.IntField()
 	price = ME.FloatField()
