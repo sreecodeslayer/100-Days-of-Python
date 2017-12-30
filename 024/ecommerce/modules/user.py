@@ -29,6 +29,10 @@ class User(Resource):
 			user = UserModel(email= email)
 			user.setpasswd(password)
 			user.save()
+
+			cart = Cart()
+			cart.customer = user
+			cart.save()
 			return jsonify(message="Successfully signed up")
 			
 		except NotUniqueError:
