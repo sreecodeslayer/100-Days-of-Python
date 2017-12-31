@@ -7,11 +7,12 @@ from ecommerce.models.accounts import User as UserModel
 from ecommerce.models.accounts import Address as AddressModel
 from ecommerce.models.products import Product as ProductModel
 
+ME = SETTINGS.ME
 
 class Cart(ME.Document):
 	customer = ME.ReferenceField(UserModel)
-	items = ME.DictField()
-	total = ME.FloatField()
+	items = ME.ListField()
+	total = ME.FloatField(default=0)
 
 class Shipment(ME.Document):
 	shipped_on = ME.DateTimeField(
