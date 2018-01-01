@@ -9,6 +9,40 @@ from ecommerce.models.products import Product as ProductModel
 from ecommerce.modules.user import authorize_access_key
 
 class Cart(Resource):
+	def get(self):
+		access_key = request.args.get('access_key')
+
+		try:
+			assert access_key
+
+			if not authorize_access_key(access_key):
+				return make_response(
+					jsonify(message = "Unauthorised"),
+					403
+				)
+		except AssertionError:
+			return make_response(
+				jsonify(message = "Invalid request"),
+				400
+			)
+
+		try:
+			customer = UserModel.objects.get(access_key = access_key)
+			cart = CartModel.objects.get(customer = customer)
+		except DoesNotExist:
+			return make_response(
+				jsonify(message = "Not found"),
+				404
+			)
+
+		cart = cart.to_mongo().to_dict()
+		cart.pop('customer')
+		cart.pop('_id')
+		cart = cart.get('items')
+		return jsonify(cart = cart)
+
+
+
 	def put(self):
 		data = request.get_json()
 
@@ -57,7 +91,6 @@ class Cart(Resource):
 					if curr['product'] == product.pid:
 						curr['qty'] = qty
 						curr['total'] = item_total
-						print("If >> ", curr)
 						current_items.append(curr)
 			else:
 				item = {
