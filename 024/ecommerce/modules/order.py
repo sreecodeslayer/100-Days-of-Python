@@ -227,5 +227,8 @@ class Checkout(Resource):
 		
 		order['shipping_add'] = shipping_addr
 		order['billing_add'] = billing_addr
+
+		# remove the items from cart
+		cart.update(items = [], total = 0)
 		
 		return jsonify(order = order)
