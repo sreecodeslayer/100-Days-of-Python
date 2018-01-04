@@ -204,11 +204,11 @@ class Checkout(Resource):
 
 		oid = "OD#"+str(b16encode(uuid4().bytes),encoding='utf-8')
 		
-		order = OrderModel(oid = oid)
 
 		try:
 			shipping_addr = AddressModel.objects.get(aid = shipping_addr)
 			billing_addr = AddressModel.objects.get(aid = billing_addr)
+			order = OrderModel(oid = oid)
 		except DoesNotExist:
 			return make_response(
 				jsonify(message = "Address(es) Not found"),
