@@ -25,6 +25,7 @@ class Shipment(ME.Document):
 
 class Order(ME.Document):
 	oid = ME.StringField()
+	customer = ME.ReferenceField(UserModel)
 	ordered_on = ME.DateTimeField(
 		default=datetime.utcnow() + timedelta(hours=5, minutes=30)
 	)
@@ -38,5 +39,5 @@ class Order(ME.Document):
 	shipment = ME.ReferenceField(Shipment)
 	meta = {
 		'strict':False,
-		'indexes':['oid','ordered_on']
+		'indexes':['oid','ordered_on','customer']
 	}

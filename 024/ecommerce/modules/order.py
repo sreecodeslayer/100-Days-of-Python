@@ -205,9 +205,17 @@ class Checkout(Resource):
 		oid = "OD#"+str(b16encode(uuid4().bytes),encoding='utf-8')
 		
 		order = OrderModel(oid = oid)
-		shipping_addr = AddressModel.objects.get(aid = shipping_addr)
-		billing_addr = AddressModel.objects.get(aid = billing_addr)
 
+		try:
+			shipping_addr = AddressModel.objects.get(aid = shipping_addr)
+			billing_addr = AddressModel.objects.get(aid = billing_addr)
+		except DoesNotExist:
+			return make_response(
+				jsonify(message = "Address(es) Not found"),
+				404
+			)
+
+		order.customer = customer
 		order.shipping_add = shipping_addr
 		order.billing_add = billing_addr
 		order.items = cart.items
@@ -216,6 +224,7 @@ class Checkout(Resource):
 
 		order = order.to_mongo().to_dict()
 		order.pop("_id")
+		order.pop("customer")
 
 		shipping_addr = shipping_addr.to_mongo().to_dict()
 		shipping_addr.pop("_id")
@@ -225,10 +234,98 @@ class Checkout(Resource):
 		billing_addr.pop("_id")
 		billing_addr.pop("user")
 		
-		order['shipping_add'] = shipping_addr
-		order['billing_add'] = billing_addr
+		order.pop("shipping_add")
+		order["ship_to"] = shipping_addr
+
+		order.pop("billing_add")
+		order["bill_for"] = billing_addr
 
 		# remove the items from cart
 		cart.update(items = [], total = 0)
-		
+
 		return jsonify(order = order)
+
+
+class Orders(Resource):
+	def get(self):
+		access_key = request.args.get('access_key')
+		page_num = int(request.args.get('page',1))
+		per_page = int(request.args.get('per_page',6))
+
+
+		try:
+			assert access_key
+
+			if not authorize_access_key(access_key):
+				return make_response(
+					jsonify(message="Unauthorised"),
+					403
+				)
+
+		except AssertionError:
+			return make_response(
+				jsonify(message = "Invalid request"),
+				400
+			)
+
+		try:
+			customer = UserModel.objects.get(access_key = access_key)
+			ods = OrderModel.objects(
+				customer = customer
+			).paginate(
+				page=page_num,
+				per_page=per_page
+			)
+
+
+			_orders = ods.items
+			total = ods.total
+			total_pages = ods.pages
+			current_page = ods.page
+
+			next_page = ods.next_num
+			prev_page = ods.prev_num
+
+		except DoesNotExist:
+			return make_response(
+				jsonify(message = "Not found"),
+				404
+			)
+
+		orders = []
+
+		try:
+
+			for order in _orders:
+				shipping_addr = order.shipping_add.to_mongo().to_dict()
+				shipping_addr.pop('_id')
+				shipping_addr.pop('user')
+				
+				billing_addr = order.billing_add.to_mongo().to_dict()
+				billing_addr.pop('_id')
+				billing_addr.pop('user')
+
+
+				order = order.to_mongo().to_dict()
+				order.pop('_id')
+				order.pop('customer')
+				order.pop('shipping_add')
+				order.pop('billing_add')
+
+				order['ship_to'] = shipping_addr
+				order['bill_for'] = billing_addr
+				orders.append(order)
+
+			return jsonify(
+				orders = orders,
+				total = total,
+				total_pages = total_pages,
+				current_page = current_page,
+				next_page = next_page,
+				prev_page = prev_page
+			)
+		except Exception as e:
+			raise e
+
+
+			
