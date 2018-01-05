@@ -4,7 +4,7 @@ from ecommerce import settings as SETTINGS
 from ecommerce.modules.user import User,Users
 from ecommerce.modules.user import Address#,Addresses
 from ecommerce.modules.product import Product, Products
-from ecommerce.modules.order import Cart, Checkout, Orders
+from ecommerce.modules.order import Cart, Checkout, Order, Orders
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_envvar('ECOMMERCE')
@@ -27,4 +27,5 @@ api.add_resource(Products, '/api/products')
 
 api.add_resource(Cart, '/api/cart')
 api.add_resource(Checkout, '/api/cart/checkout')
+api.add_resource(Order, '/api/manage/order')
 api.add_resource(Orders, '/api/orders')

@@ -328,4 +328,41 @@ class Orders(Resource):
 			raise e
 
 
-			
+class Order(Resource):
+
+	def delete(self):
+		data = request.get_json()
+		
+		try:
+			access_key = data.get('access_key')
+			oid = data.get('oid')
+
+			assert access_key
+			if not authorize_access_key(access_key):
+				return make_response(
+					jsonify(	message="Unauthorised"),
+					403
+				)
+			assert oid
+		except AssertionError:
+			return make_response(
+				jsonify(message = "Invalid request"),
+				400
+			)
+
+		try:
+			customer = UserModel.objects.get(access_key = access_key)
+			order = OrderModel.objects.get(oid = oid, customer = customer)
+		except DoesNotExist:
+			return make_response(
+				jsonify(message="Not found"),
+				404
+			)
+		if order.status != "Delivered" and order.status != "Shipped" and order.status != "Cancelled":
+			order.update(status = "Cancelled")
+			order.reload()
+			return jsonify(message = "Order has been Cancelled, refund will be initiated soon.")
+		else:
+			return jsonify(
+				message="Cancellation not allowed as the order status has changed to: '%s'"%(order.status)
+			)
