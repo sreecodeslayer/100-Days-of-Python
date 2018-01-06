@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>ECommerce</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="./static/css/materialize.css" />
+	<link rel="stylesheet" type="text/css" href="./static/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.8.1/css/perfect-scrollbar.min.css" />
+</head>
+<body class="layout-dark">
+	<!-- Start Page Loading -->
+	<div id="loader-wrapper">
+	</div>
+	<!-- End Page Loading -->
+
+	<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- START HEADER -->
+	<header id="header" class="page-topbar">
+		<div class="navbar-fixed">
+			<nav class="navbar-color">
+				<div class="nav-wrapper">
+					<!-- <ul class="right hide-on-med-and-down">
+						<li>
+							<a href="#" class="waves-effect waves-block waves-light translation-button">Logout</a>
+						</li>
+					</ul> -->
+				</div>
+			</nav>
+		</div>
+	</header>
+	<!-- END HEADER -->
+
+	<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- START MAIN -->
+	<div id="main">
+		<!-- START WRAPPER -->
+		<div class="wrapper">
+
+			<div id="app"></div>
+
+			<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+			<!-- START CONTENT -->
+			<section id="content">
+			</section>
+			<!-- END CONTENT -->
+
+			<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+			<!-- START RIGHT SIDEBAR NAV-->
+			<aside id="right-sidebar-nav">
+			</aside>
+			<!-- LEFT RIGHT SIDEBAR NAV-->
+
+		</div>
+		<!-- END WRAPPER -->
+		</div>
+	</div>
+	<!-- END MAIN -->
+
+	<!-- //////////////////////////////////////////////////////////////////////////// -->
+	<!-- START FOOTER -->
+	<footer class="page-footer gradient-45deg-purple-deep-orange">
+	</footer>
+	<!-- END FOOTER -->
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.8.1/js/perfect-scrollbar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script type="text/javascript">
+
+	/*Preloader*/
+	$(window).on('load', function() {
+		setTimeout(function() {
+			$('body').addClass('loaded');
+		}, 200);
+	});
+
+	// /*Preloader*/
+	// $(window).on('load', function() {
+	// 	setTimeout(function() {
+	// 		$('body').addClass('loaded');
+	// 	}, 200);
+	// });
+
+	$(function() {
+
+		"use strict";
+
+		var window_width = $(window).width();
+		var openIndex;
+
+		// Collapsible navigation menu
+		$('.nav-collapsible .navbar-toggler').click(function() {
+			//set Index velue
+			getCollapseIndex();
+			// Toggle navigation expan and collapse on radio click
+			if ($('#left-sidebar-nav').hasClass('nav-expanded') && !$('#left-sidebar-nav').hasClass('nav-lock')) {
+				$('#left-sidebar-nav').toggleClass('nav-expanded');
+				$('#main').toggleClass('main-full');
+			} else {
+				$('#left-sidebar-nav').toggleClass('nav-expanded nav-collapsed');
+				$('#main').toggleClass('main-full');
+			}
+			// Set navigation lock / unlock with radio icon
+			if ($(this).children().text() == 'radio_button_unchecked') {
+				$(this).children().text('radio_button_checked');
+				$('#left-sidebar-nav').addClass('nav-lock');
+				$('.header-search-wrapper').addClass('sideNav-lock');
+			} else {
+				$(this).children().text('radio_button_unchecked');
+				$('#left-sidebar-nav').removeClass('nav-lock');
+				$('.header-search-wrapper').removeClass('sideNav-lock');
+			}
+
+			setTimeout(function() {
+				if (openIndex != null) {
+					if ($('#left-sidebar-nav').hasClass('nav-collapsed')) {
+						$('.collapsible').collapsible('close', (openIndex));
+					}
+				}
+			}, 100);
+		});
+
+		// Expand navigation on mouseenter event
+		$('#left-sidebar-nav.nav-collapsible').mouseenter(function() {
+			//set Index velue
+			getCollapseIndex();
+
+			if (!$(this).hasClass('nav-lock')) {
+				$(this).addClass('nav-expanded').removeClass('nav-collapsed');
+				setTimeout(function() {
+					$('.collapsible').collapsible('open', (openIndex));
+				}, 100);
+			}
+			});
+
+			// Collapse navigation on mouseleave event
+			$('#left-sidebar-nav.nav-collapsible').mouseleave(function() {
+			//set Index velue
+			getCollapseIndex();
+			if (!$(this).hasClass('nav-lock')) {
+				$(this).addClass('nav-collapsed').removeClass('nav-expanded');
+				setTimeout(function() {
+					$('.collapsible').collapsible('close', (openIndex));
+				}, 100);
+			}
+		});
+
+		function getCollapseIndex() {
+			$("#slide-out > li > ul > li > a.collapsible-header").each(function(index) {
+				if ($(this).parent().hasClass('active')) {
+					openIndex = index;
+				}
+			});
+		}
+	})
+</script>
+</html>
