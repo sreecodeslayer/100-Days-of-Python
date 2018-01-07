@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import {VueMasonryPlugin} from 'vue-masonry';
+
+
 import ECommerceHome from '@/components/ECommerceHome'
 import AllCategory from '@/components/AllCategory'
 import Electronics from '@/components/Electronics'
@@ -9,6 +12,7 @@ import AboutUS from '@/components/AboutUS'
 import ContactUs from '@/components/ContactUs'
 
 Vue.use(Router)
+Vue.use(VueMasonryPlugin)
 
 export default new Router({
   routes: [
