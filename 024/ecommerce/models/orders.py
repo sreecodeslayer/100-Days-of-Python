@@ -24,22 +24,19 @@ class Shipment(ME.Document):
 	delivered_on = ME.DateTimeField()
 
 class Order(ME.Document):
-	oid = ME.StringField(
-		default = "OD#"+str(b16encode(
-			uuid4().bytes),encoding='utf-8')
-		)
-
-	shipped_on = ME.DateTimeField(
+	oid = ME.StringField()
+	ordered_on = ME.DateTimeField(
 		default=datetime.utcnow() + timedelta(hours=5, minutes=30)
 	)
-
-	total = ME.FloatField()
+	shipped_on = ME.DateTimeField()
+	items = ME.ListField(default = [])
+	total = ME.FloatField(default = 0)
 	paid = ME.BooleanField(default=False)
 	billing_add = ME.ReferenceField(AddressModel)
-	selling_add = ME.ReferenceField(AddressModel)
+	shipping_add = ME.ReferenceField(AddressModel)
 	status = ME.StringField(default="Awaiting Payment")
 	shipment = ME.ReferenceField(Shipment)
 	meta = {
 		'strict':False,
-		'indexes':['oid']
+		'indexes':['oid','ordered_on']
 	}
