@@ -1,16 +1,42 @@
-<!DOCTYPE html><html lang=en><head><title>ECommerce</title><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css><link rel=stylesheet href=./static/css/materialize.css><link rel=stylesheet type=text/css href=./static/css/style.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.8.1/css/perfect-scrollbar.min.css><link href=/static/css/app.652ec9e16d8ea44da2c19728d3598780.css rel=stylesheet></head><body class=layout-dark id=app><div id=loader-wrapper></div><header id=header class=page-topbar><div class=navbar-fixed><nav class=navbar-color><div class=nav-wrapper></div></nav></div></header><div id=main><div class=wrapper><aside id=left-sidebar-nav class="nav-expanded nav-lock nav-collapsible"><div class=brand-sidebar><h1 class=logo-wrapper><a href=# class="brand-logo darken-1"><img src=http://via.placeholder.com/100x47> <span class=logo-text>AdminUI</span> </a><a href=# class=navbar-toggler><i class=material-icons>radio_button_checked</i></a></h1></div><ul id=slide-out class="side-nav fixed leftside-navigation"><li class="no-padding bold"><a class="waves-effect waves-cyan"><i class=material-icons>settings_ethernet</i><span>Route 1</span></a></li></ul></aside><section id=content></section><aside id=right-sidebar-nav></aside></div></div><footer class="page-footer gradient-45deg-purple-deep-orange"></footer><script type=text/javascript src=/static/js/manifest.46d23c17cfb79465b7ca.js></script><script type=text/javascript src=/static/js/vendor.5973cf24864eecc78c48.js></script><script type=text/javascript src=/static/js/app.d22b8b89df6c7f1a0bc6.js></script></body><script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.8.1/js/perfect-scrollbar.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js></script><script type=text/javascript>/*Preloader*/
-	$(window).on('load', function() {
-		setTimeout(function() {
-			$('body').addClass('loaded');
-		}, 200);
-	});
+<!DOCTYPE html>
+<html lang=en>
+<head>
+	<title>ECommerce</title>
+	<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css>
+	<link rel=stylesheet href=./static/css/materialize.css>
+	<link rel=stylesheet type=text/css href=./static/css/style.css>
+	<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.8.1/css/perfect-scrollbar.min.css>
+	<link href=/static/css/app.fbdd172291717f61eab68abdca07e422.css rel=stylesheet>
+	</head>
+	<body class=layout-dark>
+		<div id=loader-wrapper></div>
+		<header id=header class=page-topbar>
+			<div class=navbar-fixed>
+				<nav class=navbar-color>
+				<div class=nav-wrapper>
+					
+				</div>
+				</nav>
+				</div>
+				</header>
+				<div id=main>
+					<div class=wrapper>
+						<div id=app>
+							<aside id=right-sidebar-nav>
+								
+							</aside></div></div></div><footer class="page-footer gradient-45deg-purple-deep-orange"></footer><script type=text/javascript src=/static/js/manifest.2cc46eb7f42ac0c00c33.js></script><script type=text/javascript src=/static/js/vendor.e7480045de790a6256ab.js></script><script type=text/javascript src=/static/js/app.1721ad433c2271ef202e.js></script></body><script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.8.1/js/perfect-scrollbar.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.1/jquery.twbsPagination.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.1/masonry.pkgd.min.js></script><script type=text/javascript>/*Preloader*/
+$(window).on('load', function() {
+	setTimeout(function() {
+		$('body').addClass('loaded');
+	}, 200);
+});
 
-	/*Preloader*/
-	$(window).on('load', function() {
-		setTimeout(function() {
-			$('body').addClass('loaded');
-		}, 200);
-	});
+	// /*Preloader*/
+	// $(window).on('load', function() {
+	// 	setTimeout(function() {
+	// 		$('body').addClass('loaded');
+	// 	}, 200);
+	// });
 
 	$(function() {
 
@@ -62,7 +88,7 @@
 					$('.collapsible').collapsible('open', (openIndex));
 				}, 100);
 			}
-			});
+		});
 
 			// Collapse navigation on mouseleave event
 			$('#left-sidebar-nav.nav-collapsible').mouseleave(function() {
@@ -76,11 +102,11 @@
 			}
 		});
 
-		function getCollapseIndex() {
-			$("#slide-out > li > ul > li > a.collapsible-header").each(function(index) {
-				if ($(this).parent().hasClass('active')) {
-					openIndex = index;
-				}
-			});
-		}
-	})</script></html>
+			function getCollapseIndex() {
+				$("#slide-out > li > ul > li > a.collapsible-header").each(function(index) {
+					if ($(this).parent().hasClass('active')) {
+						openIndex = index;
+					}
+				});
+			}
+		})</script></html>
