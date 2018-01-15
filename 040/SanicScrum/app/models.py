@@ -1,8 +1,10 @@
-from peewee import PostgresqlDatabase, Model
+from peewee import Model
+from playhouse.postgres_ext import PostgresqlExtDatabase
 from peewee import CharField, TextField, DateTimeField
 from passlib.hash import pbkdf2_sha512
 from datetime import datetime
-psql_db = PostgresqlDatabase('sanic_scrum', user='sanic_scrum')
+
+psql_db = PostgresqlExtDatabase('sanic_scrum', user='madboy', register_hstore=False)
 
 
 class BaseModel(Model):
