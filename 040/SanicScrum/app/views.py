@@ -98,7 +98,7 @@ class Dashboard(HTTPMethodView):
 	decorators = [auth.login_required]
 	async def get(self, request):
 
-		return json({})
+		return json({"message":"Dashboard"})
 
 
 

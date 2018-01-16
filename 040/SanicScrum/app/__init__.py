@@ -35,10 +35,11 @@ redis = Redis()
 
 # pass the getter method for the connection pool into the session
 # https://pythonhosted.org/sanic_session/using_the_interfaces.html
-session = RedisSessionInterface(redis.get_redis_pool, domain="session", cookie_name="session")
+session = RedisSessionInterface(redis.get_redis_pool, cookie_name="session")
 
 @app.middleware('request')
 async def add_session_to_request(request):
+	print(request.headers)
 	await session.open(request)
 
 @app.middleware('response')
