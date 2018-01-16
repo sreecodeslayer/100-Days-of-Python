@@ -2,7 +2,7 @@ from sanic.response import json, redirect
 from sanic.views import HTTPMethodView
 from sanic import Blueprint
 from peewee import IntegrityError
-from app import auth
+from app import auth, jinja
 from app.models import User
 from playhouse.shortcuts import model_to_dict
 
@@ -11,6 +11,15 @@ blueprint = Blueprint('SanicScrum', url_prefix = '/')
 
 
 class Login(HTTPMethodView):
+
+	'''
+	Login
+	@route: '/login'
+	@method: GET
+
+	'''
+	async def get(self, request):
+		return jinja.render('login.html', request)
 	'''
 	Login
 	@route: '/login'
@@ -41,7 +50,7 @@ class Login(HTTPMethodView):
 						'message':"Login success!",
 						'user':model_to_dict(usr, 
 							backrefs=True,
-							exclude={User.passwd}
+							exclude={User.passwd, User.id}
 						)
 					},
 					status = 200

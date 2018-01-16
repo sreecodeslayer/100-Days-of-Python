@@ -1,9 +1,15 @@
 from sanic import Sanic
-from app.models import User
+from sanic.response import redirect
+
 from sanic_auth import Auth
-from aoiklivereload import LiveReloader
+from sanic_jinja2 import SanicJinja2
 from sanic_session import RedisSessionInterface
+
+from aoiklivereload import LiveReloader
 import asyncio_redis
+
+from app.models import User
+
 name = "SanicScrum"
 version = "0.1a"
 
@@ -12,7 +18,12 @@ reloader = LiveReloader()
 reloader.start_watcher_thread()
 
 app = Sanic(__name__)
+app.static('/static', './static')
+app.static('/templates', './')
 app.config.AUTH_LOGIN_URL = '/'
+
+jinja = SanicJinja2(app)
+
 
 class Redis:
 	"""
@@ -39,7 +50,6 @@ session = RedisSessionInterface(redis.get_redis_pool, cookie_name="session")
 
 @app.middleware('request')
 async def add_session_to_request(request):
-	print(request.headers)
 	await session.open(request)
 
 @app.middleware('response')
@@ -63,11 +73,20 @@ def user_loader(user):
 	return user
 
 
-app.auth = auth
-
-
 from app.views import Login, Register
 from app.views import Dashboard
 app.add_route(Login.as_view(),'/login')
 app.add_route(Register.as_view(),'/signup')
 app.add_route(Dashboard.as_view(),'/dashboard')
+
+@app.route('/logout', methods=['GET'])
+@auth.login_required
+async def logout(request):
+	auth.logout_user(request)
+	return redirect('/')
+
+@app.route('/', methods=['GET'])
+async def index(request):
+	if auth.current_user(request):
+		return redirect('/dashboard')
+	return redirect('/login')
