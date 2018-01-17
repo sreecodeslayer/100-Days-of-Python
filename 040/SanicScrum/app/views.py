@@ -19,7 +19,9 @@ class Login(HTTPMethodView):
 
 	'''
 	async def get(self, request):
-		return jinja.render('login.html', request)
+		if not auth.current_user(request):
+			return jinja.render('login.html', request)
+		return redirect('/')
 	'''
 	Login
 	@route: '/login'

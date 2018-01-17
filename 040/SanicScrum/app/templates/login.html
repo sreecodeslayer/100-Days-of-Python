@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sanic_Scrum | Login</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../static/css/material-dashboard.css">
+	<!--     Fonts and icons     -->
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+
+	<style type="text/css">
+		#login-content {
+			width: 50%;
+			height: 100px;
+			position: absolute;
+			top:0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+
+			/*margin: auto;*/
+			margin-top: 25%;
+			margin-bottom: auto;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		@media (max-width: 767px) {
+			#login-content {
+				width: 70%
+			}
+		}
+
+		@media (max-width: 991px) {
+			#login-content {
+				width: 80%;
+				height: 10px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div  class="wrapper">
+		<div class="container">
+		<div class="content">
+			<div class="container" id="login-content">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header" data-background-color="green">
+								<h4 class="title">Login</h4>
+							</div>
+							<div class="card-content">
+								<form onsubmit="loginUser();" id="login-form">
+									<div class="row">
+										<div class="col-md-12 col-lg-12 col-sm-12">
+											<div class="form-group label-floating is-empty">
+												<label class="control-label">
+													<i class="fa fa-user"></i> Username
+												</label>
+												<input
+													type="text"
+													class="form-control"
+													name="Username"
+													id="username"
+													autocomplete="off"
+													required>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12 col-sm-12 col-lg-12">
+											<div class="form-group label-floating is-empty">
+												<label class="control-label">
+													<i class="fa fa-lock"></i> Password
+												</label>
+												<input
+													type="password"
+													class="form-control"
+													name="Password"
+													id="password"
+													autocomplete="off"
+													required>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12 col-lg-offset-8">
+											<button type="subit" value="Submit" class="btn btn-lg btn-success">Login</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="../static/js/material.min.js"></script>
+<script type="text/javascript" src="../static/js/material-dashboard.js"></script>
+<script type="text/javascript">
+	// prevent default
+	$("#login-form").submit(function(e){
+		return false;
+	})
+	function loginUser() {
+		var username = $("#username").val();
+		var password = $("#password").val();
+
+		var data = {
+			username: username,
+			password: password
+		}
+
+		$.ajax({
+			url: '/login',
+			type: 'POST',
+			data: JSON.stringify(data),
+			contentType: 'application/json; charset=utf-8',
+			dataType: 'json',
+			success: function(data) {
+				user = data.user
+
+				localStorage.setItem('user', JSON.stringify(user));
+				window.location.href = '/dashboard';
+			}
+		});
+
+	}
+</script>
+</html>

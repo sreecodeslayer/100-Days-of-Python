@@ -9,17 +9,20 @@ from aoiklivereload import LiveReloader
 import asyncio_redis
 
 from app.models import User
+import os
 
 name = "SanicScrum"
 version = "0.1a"
 
-
+app_root = os.path.dirname(__file__)
+static_root = os.path.join(app_root,'static')
+templates_root = app_root
 reloader = LiveReloader()
 reloader.start_watcher_thread()
 
 app = Sanic(__name__)
-app.static('/static', './static')
-app.static('/templates', './')
+app.static('/static', static_root)
+app.static('/templates', templates_root)
 app.config.AUTH_LOGIN_URL = '/'
 
 jinja = SanicJinja2(app)
