@@ -1,7 +1,7 @@
 from sanic.response import json, redirect
 from sanic.views import HTTPMethodView
 from sanic import Blueprint
-from peewee import IntegrityError
+from peewee import IntegrityError, DoesNotExist
 from app import auth, jinja
 from app.models import User
 from playhouse.shortcuts import model_to_dict
@@ -62,8 +62,11 @@ class Login(HTTPMethodView):
 				status = 404
 			)
 
-		except Exception as e:
-			raise e
+		except DoesNotExist:
+			return json(
+				{"message":"No user found with that username"},
+				status=404
+			)
 
 class Register(HTTPMethodView):
 	'''
