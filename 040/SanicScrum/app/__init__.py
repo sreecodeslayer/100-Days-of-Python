@@ -5,14 +5,21 @@ from sanic_auth import Auth
 from sanic_jinja2 import SanicJinja2
 from sanic_session import RedisSessionInterface
 
-from aoiklivereload import LiveReloader
-import asyncio_redis
+from peewee import IntegrityError, DoesNotExist
+from peewee_async import Manager
 
-from app.models import User
+from uuid import uuid4
+from aoiklivereload import LiveReloader
+
+
+import asyncio
+import asyncio_redis
 import os
 
 name = "SanicScrum"
 version = "0.1a"
+
+current_admin_passwd = "d984add69d314f15a12d"
 
 app_root = os.path.dirname(__file__)
 static_root = os.path.join(app_root,'static')
@@ -21,12 +28,13 @@ reloader = LiveReloader()
 reloader.start_watcher_thread()
 
 app = Sanic(__name__)
+app_loop = asyncio.get_event_loop()
+
 app.static('/static', static_root)
 app.static('/templates', templates_root)
 app.config.AUTH_LOGIN_URL = '/'
 
 jinja = SanicJinja2(app)
-
 
 class Redis:
 	"""
@@ -60,10 +68,34 @@ async def save_session(request, response):
 	await session.save(request, response)
 
 
+
+from app.models import User
+
 @app.listener('before_server_start')
 async def create_tables(app, loop):
+	# Create table if not present
 	User.create_table(fail_silently=True)
-	
+
+	# Create admin user if not present
+	try:	
+		usr = User(email = "admin@sanic_scrum.io", username = "admin")
+		usr.sex = ""
+		usr.phone = ""
+		usr.zone = ""
+
+		new_passwd = uuid4().hex[:20]
+		usr.set_passwd(new_passwd)
+		usr.save()
+
+		print("="*50)
+		print("Admin credentials generated\n")
+		print("Username: admin\nPassword: {}".format(new_passwd))
+		print("="*50)
+	except IntegrityError:
+
+		print("="*50)
+		print("Admin credentials are already created.\nPlease use them to login as admin")
+		print("="*50)
 
 auth = Auth(app)
 
@@ -77,10 +109,11 @@ def user_loader(user):
 
 
 from app.views import Login, Register
-from app.views import Dashboard
+from app.views import Dashboard, Peoples
 app.add_route(Login.as_view(),'/login')
 app.add_route(Register.as_view(),'/signup')
 app.add_route(Dashboard.as_view(),'/dashboard')
+app.add_route(Peoples.as_view(),'/users')
 
 @app.route('/logout', methods=['GET'])
 @auth.login_required

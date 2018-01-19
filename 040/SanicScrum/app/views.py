@@ -3,8 +3,9 @@ from sanic.views import HTTPMethodView
 from sanic import Blueprint
 from peewee import IntegrityError, DoesNotExist
 from app import auth, jinja
-from app.models import User
+from app.models import User, objects
 from playhouse.shortcuts import model_to_dict
+from playhouse.postgres_ext import ServerSide
 
 
 blueprint = Blueprint('SanicScrum', url_prefix = '/')
@@ -112,9 +113,27 @@ class Dashboard(HTTPMethodView):
 	decorators = [auth.login_required]
 	async def get(self, request):
 
-		return json({"message":"Dashboard"})
+		return jinja.render('index.html', request)
 
 
+class Peoples(HTTPMethodView):
+	decorators = [auth.login_required]
+	async def get(self, request):
+		try:
+
+
+			usrs = User.select().order_by(User.create_datetime)
+			total = await objects.count(usrs)
+			usrs = await objects.execute(usrs)
+			users = []
+			for usr in usrs:
+				users.append(model_to_dict(usr, exclude = [User.passwd]))
+
+			return json(
+				dict(users = users, total = total)
+			)
+		except Exception as e:
+			raise e
 
 
 

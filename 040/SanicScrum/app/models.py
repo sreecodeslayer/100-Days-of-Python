@@ -1,11 +1,18 @@
 from peewee import Model
 from playhouse.postgres_ext import PostgresqlExtDatabase
 from peewee import CharField, TextField, DateTimeField
+from peewee_async import Manager, PostgresqlDatabase
+
 from passlib.hash import pbkdf2_sha512
 from datetime import datetime
 
-psql_db = PostgresqlExtDatabase('sanic_scrum', user='madboy', register_hstore=False)
+from app import app_loop
 
+# psql_db = PostgresqlExtDatabase('sanic_scrum', user='sreenadh', register_hstore=False)
+psql_db = PostgresqlDatabase(database = 'sanic_scrum', user='sreenadh')
+
+
+objects = Manager(psql_db, loop=app_loop)
 
 class BaseModel(Model):
 	"""A base model that will use our Postgresql database"""
