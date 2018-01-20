@@ -114,3 +114,9 @@ coverage/
 *.log
 .idea
 .vscode
+
+# Dist files
+app.*.j*
+app.*.cs*
+vendor.*.j*
+manifest.*.j*
