@@ -1,4 +1,4 @@
-<template lang="pug">
+<!-- <template lang="pug">
 .content
   .row
     .col-md-8
@@ -46,29 +46,41 @@
           p.card-content
             | {{user.aboutMe}}
           md-button.btn.btn-primary.btn-round(href='#/person') Follow
+</template> -->
+<template>
+  <div class="content">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card card-profile">
+          <div class="card-avatar">
+            <a href="#"><img src="~images/faces/marc.jpg"></a>
+          </div>
+          <div class="content">
+            <h6 class="category">{{ user.username }}</h6>
+            <h4 class="title">{{ user.email }}</h4>
+            <p class="card-content">Phone: {{user.phone}} | 
+              Gender: {{user.sex}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      user: {
-        company: 'Material Dashboard',
-        username: 'lucduong',
-        email: 'luc@ltv.vn',
-        firstName: 'Luc',
-        lastName: 'Duong',
-        address: 'Ho Chi Minh, Viet Nam',
-        country: 'Viet Nam',
-        city: 'Ho Chi Minh',
-        postalCode: '',
-        aboutMe: `Oh so, your weak rhyme. You doubt I'll bother, reading into it.I'll probably won't, left to my own devicesBut that's the difference in our opinions.`
-      }
+      user: {}
     }
   },
   methods: {
-    updateProfile() {
-      alert('Your data: ' + JSON.stringify(this.user))
+    getUserFromLocalStorage() {
+      this.user = JSON.parse(localStorage.getItem('user'))
     }
+  },
+  created() {
+    this.getUserFromLocalStorage();
   }
 }
 </script>

@@ -239,6 +239,42 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-lg-10 col-md-12">
+        <div class="card">
+          <div class="card-header" data-background-color="orange">
+            <h4 class="title">Users stats</h4>            
+          </div>
+          <div class="card-content table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <tr>
+                  <th>ID</th>
+                  <th>Userame</th>
+                  <th>Email</th>
+                  <th>Sex</th>
+                  <th>Zone</th>
+                  <th>Phone</th>
+                  <th>Joined on</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="user in users">
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.username }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.sex }}</td>
+                  <td>{{ user.zone }}</td>
+                  <td>{{ user.phone }}</td>
+                  <td>{{ user.create_datetime }}</td>
+                </tr>
+              </tbody>
+            </table>
+            
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

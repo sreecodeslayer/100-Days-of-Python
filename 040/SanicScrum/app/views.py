@@ -44,7 +44,8 @@ class Login(HTTPMethodView):
 				status = 401
 			)
 		try:
-			usr = User.get(username = username)
+			usr = await objects.get(User, username = username)
+
 
 			if usr and usr.verify_passwd(passwd):
 				auth.login_user(request, usr)
