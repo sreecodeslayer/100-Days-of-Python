@@ -109,11 +109,12 @@ def user_loader(user):
 
 
 from app.views import Login, Register
-from app.views import Dashboard, Peoples
+from app.views import Dashboard, Peoples, People
 app.add_route(Login.as_view(),'/login')
 app.add_route(Register.as_view(),'/signup')
 app.add_route(Dashboard.as_view(),'/dashboard')
 app.add_route(Peoples.as_view(),'/users')
+app.add_route(People.as_view(),'/user')
 
 @app.route('/logout', methods=['GET'])
 @auth.login_required

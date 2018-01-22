@@ -154,5 +154,34 @@ class Peoples(HTTPMethodView):
 		except Exception as e:
 			raise e
 
+class People(HTTPMethodView):
+	decorators = [auth.login_required]
+	async def delete(self, request):
+		try:
+			email = request.json.get('email')
+			assert email
+		except AssertionError:
+			return json(
+				dict(
+					message="email of the user required to delete him/her"
+				),
+				status=400
+			)
 
+		try:
+			usr = await objects.get(User, email=email)
+			result = await objects.delete(usr)
+
+			return json(
+				dict(
+					message="User with email: %s has been removed from team"%(email)
+				)
+			)
+		except DoesNotExist:
+			return json(
+				dict(
+					message="User not found in team, sorry!"
+					),
+				status=404
+			)
 

@@ -256,6 +256,7 @@
                   <th>Zone</th>
                   <th>Phone</th>
                   <th>Joined on</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -267,6 +268,12 @@
                   <td>{{ user.zone }}</td>
                   <td>{{ user.phone }}</td>
                   <td>{{ user.create_datetime }}</td>
+                  <td>
+                    <button class="btn btn-danger btn-fab btn-fab-mini" v-on:click="deleteUser(user.email)">
+                      <i class="fa fa-trash-o"></i>
+                      <div class="ripple-container"></div>
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -309,7 +316,13 @@ export default {
       }, function onError(resp) {
         console.log("Error.... ")
       })
-    }
+    },
+     deleteUser(email) {
+      this.$http.delete('/user', {body:{'email':email}}).then(
+        function onSuccess(response) {
+          this.$router.go(this.$router.currentRoute);
+        }, function onError(response) {})
+     }
   },
   mounted() {
     this.getUsers();
