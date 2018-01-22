@@ -21,9 +21,9 @@ class BaseModel(Model):
 
 class User(BaseModel):
 
-	create_datetime = DateTimeField(default=datetime.utcnow(), null=True)
+	create_datetime = DateTimeField(default=datetime.utcnow, null=True)
 	username = CharField(unique = True, index = True)
-	passwd = CharField()
+	passwd = CharField(null=True)
 	email = CharField(unique = True, index = True)
 	phone = CharField()
 	sex = CharField()

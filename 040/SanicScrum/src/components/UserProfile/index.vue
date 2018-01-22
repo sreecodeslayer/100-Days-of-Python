@@ -50,7 +50,106 @@
 <template>
   <div class="content">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-8 col-sm-12 col-lg-9">
+        <div class="card">
+          <div class="card-header" data-background-color="blue">
+            <h4 class="title">Add Members</h4>
+            <p class="category">You can add new members to your team here!</p>
+          </div>
+
+
+          <div class="card-content">
+            <form v-on:submit.prevent = "addNewUser()" name="addNewUserForm" novalidate>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group label-floating is-empty">
+                    <md-fg-input
+                      type="text"
+                      name="username" required
+                      v-model="newUser.username"
+                      label="Username"
+                      labelFloating=true></md-fg-input>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group label-floating is-empty">
+                    <md-fg-input
+                      type="email"
+                      name="email" required
+                      v-model="newUser.email"
+                      label="Email"
+                      labelFloating=true></md-fg-input>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group label-floating is-empty">
+                    <md-fg-input
+                      type="password"
+                      name="password" required
+                      v-model="newUser.password"
+                      label="Password"
+                      labelFloating=true></md-fg-input>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                    <select
+                      class="selectpicker"
+                      required
+                      v-model="newUser.sex"
+                      data-style="btn btn-sm btn-round"
+                      title="Choose Gender"
+                      data-size="7">
+
+                      <option disabled> Choose gender</option>
+                      <option value="male">Male </option>
+                      <option value="female">Female</option>
+                    </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group label-floating is-empty">
+                    <md-fg-input
+                      type="phone"
+                      name="phone" required
+                      v-model="newUser.phone"
+                      label="Phone"
+                      labelFloating=true></md-fg-input>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group label-floating is-empty">
+                    <md-fg-input
+                      type="zone"
+                      name="zone" required
+                      v-model="newUser.zone"
+                      label="Zone"
+                      labelFloating=true></md-fg-input>
+                  </div>
+                </div>
+              </div>
+              <div class="row" v-show="newUser.error">
+                <div class="col-md-12">
+                  <div class="alert alert-danger">
+                    <b>Error: </b><p v-model="newUser.error">{{newUser.error}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="btn-group">
+                    <button type="submit" class="btn btn-success">Add</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-12 col-lg-3">
         <div class="card card-profile">
           <div class="card-avatar">
             <a href="#"><img src="~images/faces/marc.jpg"></a>
@@ -71,12 +170,24 @@
 export default {
   data() {
     return {
-      user: {}
+      user: {},
+      newUser: {
+        error:''
+      }
     }
   },
   methods: {
     getUserFromLocalStorage() {
       this.user = JSON.parse(localStorage.getItem('user'))
+    },
+    addNewUser() {
+      console.log(this.newUser)
+      this.$http.post('/signup', this.newUser).then(function onSuccess(response) {
+        console.log(response)
+      }, function onError(response) {
+        console.log(response)
+        this.newUser.error = response.data.message;
+      })
     }
   },
   created() {
@@ -84,4 +195,3 @@ export default {
   }
 }
 </script>
-

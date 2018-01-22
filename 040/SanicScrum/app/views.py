@@ -6,6 +6,7 @@ from app import auth, jinja
 from app.models import User, objects
 from playhouse.shortcuts import model_to_dict
 from playhouse.postgres_ext import ServerSide
+from passlib.hash import pbkdf2_sha512
 
 
 blueprint = Blueprint('SanicScrum', url_prefix = '/')
@@ -85,15 +86,30 @@ class Register(HTTPMethodView):
 		phone = request.json.get('phone','')
 		zone = request.json.get('zone','Asia/Kolkata')
 		sex = request.json.get('sex','')
-		try:
-			usr = User(email = email, username = username)
-			usr.phone = phone
-			usr.sex = sex
-			usr.zone = zone
-			usr.set_passwd(passwd)
-			usr.save()
 
-			print(usr)
+		try:
+			assert username
+			assert passwd
+			assert email
+			assert phone
+			assert zone
+			assert sex
+		except AssertionError:
+			return json(
+				dict(message="Invalid request, params missing"),
+				status=400
+			)
+
+		try:
+			usr = await objects.create(
+				User,
+				email = email,
+				username = username,
+				phone = phone,
+				sex = sex,
+				zone = zone,
+				passwd = pbkdf2_sha512.hash(passwd)
+			)
 
 			return json(
 				{
@@ -103,10 +119,12 @@ class Register(HTTPMethodView):
 					)
 				}
 			)
-		except IntegrityError:
-			return json({
-				"message":"User already exist with that username and/or email"
-			})
+		except IntegrityError as e:
+
+			return json(
+				dict(message="User already exist with that username and/or email"),
+				status=409
+			)
 		except Exception as e:
 			raise
 

@@ -46,6 +46,7 @@ export default {
   methods: {
     initMaterial() {
       $.material.init() // eslint-disable-line
+      $('.selectpicker').selectpicker()
     },
     toggleSideBar() {
       this.sidebarToggled = !this.sidebarToggled

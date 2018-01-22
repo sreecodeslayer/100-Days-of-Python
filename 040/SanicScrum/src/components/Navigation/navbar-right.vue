@@ -1,4 +1,4 @@
-<template lang="pug">
+<!-- <template lang="pug">
 ul.nav(:class='navClasses')
   li
     router-link.dropdown-toggle(to='/', data-toggle='dropdown')
@@ -23,7 +23,18 @@ ul.nav(:class='navClasses')
   li
     a.dropdown-toggle(href='#', data-toggle='dropdown')
       i.material-icons person
-      p.hidden-lg.hidden-md Profile
+      p.hidden-lg.hidden-md Profile    
+</template> -->
+<template>
+  <ul :class="navClasses" class="nav">
+    <li>
+      <a href="#" data-toggle='dropdown' class="dropdown-toggle" v-on:click="logoutUser()">
+        <i class="fa fa-sign-out"></i>
+        <p class="hidden-lg hidden-md">Logout</p>
+        <div class="ripple-container"></div>
+      </a>
+    </li>
+  </ul>
 </template>
 <script>
 export default {
@@ -49,6 +60,10 @@ export default {
       if (this.isDropdownOpened) {
         this.isDropdownOpened = false
       }
+    },
+    logoutUser() {
+      localStorage.removeItem('user')
+      this.$http.get('/logout')
     }
   }
 }
