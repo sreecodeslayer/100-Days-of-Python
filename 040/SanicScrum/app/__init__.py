@@ -19,7 +19,7 @@ import os
 name = "SanicScrum"
 version = "0.1a"
 
-current_admin_passwd = "d984add69d314f15a12d"
+current_admin_passwd = "5379ae883dfb46e18694"
 
 app_root = os.path.dirname(__file__)
 static_root = os.path.join(app_root,'static')

@@ -250,7 +250,7 @@
               <thead class="text-warning">
                 <tr>
                   <th>ID</th>
-                  <th>Userame</th>
+                  <th>Username</th>
                   <th>Email</th>
                   <th>Sex</th>
                   <th>Zone</th>
@@ -317,12 +317,33 @@ export default {
         console.log("Error.... ")
       })
     },
-     deleteUser(email) {
-      this.$http.delete('/user', {body:{'email':email}}).then(
-        function onSuccess(response) {
-          this.$router.go(this.$router.currentRoute);
-        }, function onError(response) {})
-     }
+    deleteUser(email) {
+
+      swal(
+        'Delete',
+        'Are your sure you want to delete this user?',
+        'warning',
+        {
+          buttons: [
+            {text:"Cancel",value: false,visible: true,className: "btn btn-secondary"},
+            {text:"Yes",value: true,visible: true,className: "btn btn-danger"}
+          ]
+        }
+      ).then(function(val) {
+
+        if (val) {
+
+        this.$http.delete('/user', {body:{'email':email}}).then(
+            function onSuccess(response) {
+              // this.$router.go(this.$router.currentRoute);
+              this.getUsers();
+            },
+            function onError(response) {
+
+            });
+        }
+      }.bind(this), function() {}).catch(swal.noop);
+    }
   },
   mounted() {
     this.getUsers();

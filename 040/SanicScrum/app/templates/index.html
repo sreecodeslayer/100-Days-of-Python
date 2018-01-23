@@ -1,1 +1,52 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><link rel=apple-touch-icon sizes=76x76 href=../static/images/apple-icon.png><link rel=icon type=image/png href=../static/images/favicon.png><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta name=viewport content="width=device-width"><title>Sanic scrum | Home</title><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css><link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"><link rel=stylesheet href="https://fonts.googleapis.com/icon?family=Material+Icons"><link rel=stylesheet href=../static/css/bootstrap-select.css><link href=/static/css/app.f692d8c1c121b952f04969e5603419f7.css rel=stylesheet></head><body><div id=app></div><script src=../static/js/jquery-3.1.0.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js></script><script src=../static/js/material.min.js></script><script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAamVCoyQ4AuvBpxVRMs9P-HFkfPVQj0Kw" type=text/javascript></script><script src=https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js></script><script type=text/javascript src=/static/js/manifest.8e6bfc9fad3073d2becf.js></script><script type=text/javascript src=/static/js/vendor.cd16a384028d868d09f2.js></script><script type=text/javascript src=/static/js/app.2d0efd88145f1fb1a58e.js></script></body></html>
+<!DOCTYPE html><html><head><meta charset=utf-8><link rel=apple-touch-icon sizes=76x76 href=../static/images/apple-icon.png><link rel=icon type=image/png href=../static/images/favicon.png><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta name=viewport content="width=device-width"><title>Sanic scrum | Home</title><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css><link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"><link rel=stylesheet href="https://fonts.googleapis.com/icon?family=Material+Icons"><link rel=stylesheet href=../static/css/bootstrap-select.css><style type=text/css>.swal-modal {
+        display: inline-block;
+        position: relative;
+        margin: 25px 0;
+        box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+        color: rgba(0,0,0, 0.87);
+        background: #fff;
+    }
+
+    .swal-button--confirm {
+        border: none;
+        color: #ffffff;
+        background-color: #4caf50;
+        border-radius: 3px;
+        position: relative;
+        padding: 12px 30px;
+        margin: 10px 1px;
+        font-size: 12px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0;
+        will-change: box-shadow, transform;
+        transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2), 0 1px 5px 0 rgba(76, 175, 80, 0.12);
+    }
+    .swal-button--confirm:hover,.swal-button--confirm:active,.swal-button--confirm:active:hover,.swal-button--confirm:focus {
+        color: #ffffff;
+        background-color: #4caf50;
+        box-shadow: 0 14px 26px -12px rgba(76, 175, 80, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(76, 175, 80, 0.2);
+    }
+    .swal-button--cancel {
+        border: none;
+        color: #ffffff;
+        background-color: #f44336;
+        border-radius: 3px;
+        position: relative;
+        padding: 12px 30px;
+        margin: 10px 1px;
+        font-size: 12px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0;
+        will-change: box-shadow, transform;
+        transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2), 0 1px 5px 0 rgba(76, 175, 80, 0.12);
+    }
+    .swal-button--cancel:hover,.swal-button--cancel:active,.swal-button--cancel:active:hover,.swal-button--cancel:focus {
+        color: #ffffff;
+        background-color: #f44336;
+        box-shadow: 0 14px 26px -12px rgba(76, 175, 80, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(76, 175, 80, 0.2);
+    }</style><link href=/static/css/app.f692d8c1c121b952f04969e5603419f7.css rel=stylesheet></head><body><div id=app></div><script src=../static/js/jquery-3.1.0.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js></script><script src=https://unpkg.com/sweetalert/dist/sweetalert.min.js></script><script src=../static/js/material.min.js></script><script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAamVCoyQ4AuvBpxVRMs9P-HFkfPVQj0Kw" type=text/javascript></script><script src=https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js></script><script type=text/javascript src=/static/js/manifest.0b4501af9895a3e8e100.js></script><script type=text/javascript src=/static/js/vendor.45b03adc3327ac6868db.js></script><script type=text/javascript src=/static/js/app.db1d28f61d9863dc513b.js></script></body></html>

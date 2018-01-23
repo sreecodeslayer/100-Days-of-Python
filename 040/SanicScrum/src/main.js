@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import VueResource from 'vue-resource'
+import VueSweetAlert from 'vue-sweetalert'
 
 import router from './router'
 
@@ -29,6 +30,7 @@ Vue.use(CoreComponents)
 Vue.use(NotificationPlugin)
 Vue.use(vClickOutside)
 Vue.use(VueResource)
+Vue.use(VueSweetAlert)
 
 /* eslint-disable no-new */
 new Vue({

@@ -184,6 +184,16 @@ export default {
       console.log(this.newUser)
       this.$http.post('/signup', this.newUser).then(function onSuccess(response) {
         console.log(response)
+        
+        swal(
+          'Member Added',
+          "Added new user: " + this.newUser.username,
+          'success',
+          {
+            button:{text:"Ok!",value:true,className:"btn btn-success"}
+          }
+        ).catch(swal.noop);
+
       }, function onError(response) {
         console.log(response)
         this.newUser.error = response.data.message;
