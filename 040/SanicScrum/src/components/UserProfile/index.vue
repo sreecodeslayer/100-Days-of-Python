@@ -68,7 +68,7 @@
                       name="username" required
                       v-model="newUser.username"
                       label="Username"
-                      labelFloating=true></md-fg-input>
+                      :labelFloating=true></md-fg-input>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -78,7 +78,7 @@
                       name="email" required
                       v-model="newUser.email"
                       label="Email"
-                      labelFloating=true></md-fg-input>
+                      :labelFloating=true></md-fg-input>
                   </div>
                 </div>
               </div>
@@ -90,7 +90,7 @@
                       name="password" required
                       v-model="newUser.password"
                       label="Password"
-                      labelFloating=true></md-fg-input>
+                      :labelFloating=true></md-fg-input>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -116,7 +116,7 @@
                       name="phone" required
                       v-model="newUser.phone"
                       label="Phone"
-                      labelFloating=true></md-fg-input>
+                      :labelFloating=true></md-fg-input>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -126,7 +126,7 @@
                       name="zone" required
                       v-model="newUser.zone"
                       label="Zone"
-                      labelFloating=true></md-fg-input>
+                      :labelFloating=true></md-fg-input>
                   </div>
                 </div>
               </div>
