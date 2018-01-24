@@ -50,7 +50,7 @@
 <template>
   <div class="content">
     <div class="row">
-      <div class="col-md-8 col-sm-12 col-lg-9">
+      <div class="col-md-8 col-sm-12 col-lg-9" v-if="showAdminAddUser">
         <div class="card">
           <div class="card-header" data-background-color="blue">
             <h4 class="title">Add Members</h4>
@@ -149,7 +149,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4 col-sm-12 col-lg-3">
+      <div :class="profileClasses">
         <div class="card card-profile">
           <div class="card-avatar">
             <a href="#"><img src="~images/faces/marc.jpg"></a>
@@ -170,6 +170,8 @@
 export default {
   data() {
     return {
+      showAdminAddUser: false,
+      profileClasses: ["col-md-12","col-sm-12","col-lg-12"],
       user: {},
       newUser: {
         error:''
@@ -179,6 +181,14 @@ export default {
   methods: {
     getUserFromLocalStorage() {
       this.user = JSON.parse(localStorage.getItem('user'))
+      this.$authorize.isAuthorized(['admin'], ['view_admin']).then(function() {
+        this.showAdminAddUser = true
+        this.profileClasses = ["col-md-4","col-sm-12","col-lg-3"]
+      }.bind(this)).catch(function() {
+        this.showAdminAddUser = false
+        this.profileClasses = ["col-md-12","col-sm-12","col-lg-12"]
+      }.bind(this))
+
     },
     addNewUser() {
       console.log(this.newUser)

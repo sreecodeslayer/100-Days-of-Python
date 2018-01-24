@@ -345,6 +345,9 @@ export default {
       }.bind(this), function() {}).catch(swal.noop);
     }
   },
+  created() {
+    // console.log(this.$authorize.isAuthorized(['admin'], ['create']))
+  },
   mounted() {
     this.getUsers();
   }

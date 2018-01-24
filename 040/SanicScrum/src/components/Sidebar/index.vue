@@ -7,7 +7,8 @@
     navbar-search(v-if='open')
     navbar-right(v-if='open', :mobile='true')
     ul.nav
-      item(title='Dashboard', icon='dashboard', href='/')
+      item(title='Admin Dashboard', v-if="isAdmin" v-cloak icon='dashboard', href='/')
+      item(title='Your Dashboard', v-if="!isAdmin" v-cloak icon='dashboard', href='/dashboard')
       item(title='User Profile', icon='person', href='person')
       item(title='Table List', icon='content_paste', href='table')
       item(title='Typography', icon='library_books', href='typography')
@@ -27,12 +28,27 @@ import NavbarRight from '@/components/Navigation/navbar-right'
 
 export default {
   props: {
-    open: Boolean
+    open: Boolean,
   },
   components: {
     Item,
     NavbarSearch,
     NavbarRight
+  },
+  data() {
+
+    return {
+
+      isAdmin:""
+    }
+  },
+  mounted() {
+    this.$authorize.isAuthorized(['admin'], ['view_admin']).then(function() {
+      this.isAdmin = true
+    }.bind(this)).catch(function() {
+      this.isAdmin = false
+    }.bind(this))
+    console.log(this.isAdmin)
   }
 }
 </script>
