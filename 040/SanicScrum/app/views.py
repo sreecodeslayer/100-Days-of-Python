@@ -156,6 +156,54 @@ class Peoples(HTTPMethodView):
 
 class People(HTTPMethodView):
 	decorators = [auth.login_required]
+	async def put(self, request):
+		try:
+			_id = request.json.get('id')
+			assert email
+			assert _id
+		except AssertionError:
+			return json(
+				dict(
+					message="id of the user required to edit him/her"
+				),
+				status=400
+			)
+		try:
+			email = request.json.get('email')
+			username = request.json.get('username')
+			phone = request.json.get('phone')
+			sex = request.json.get('sex')
+		except Exception as e:
+			raise e
+
+		try:
+			usr = await objects.get(User, id=_id)
+			if email:
+				usr.email = email
+				await objects.update(email)
+			if username:
+				usr.username = username
+				await objects.update(username)
+			if phone:
+				usr.phone = phone
+				await objects.update(phone)
+			if sex:
+				usr.sex = sex
+				await objects.update(sex)
+
+			return json(
+				dict(
+					message="User with id: %s has been edited"%(id)
+				)
+			)
+		except DoesNotExist:
+			return json(
+				dict(
+					message="User not found in team, sorry!"
+					),
+				status=404
+			)
+
 	async def delete(self, request):
 		try:
 			email = request.json.get('email')
