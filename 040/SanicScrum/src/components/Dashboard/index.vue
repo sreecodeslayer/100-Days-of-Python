@@ -269,7 +269,11 @@
                   <td>{{ user.phone }}</td>
                   <td>{{ user.create_datetime }}</td>
                   <td>
-                    <button class="btn btn-danger btn-fab btn-fab-mini" v-on:click="deleteUser(user.email)">
+                    <button class="btn btn-just-icon btn-simple" v-on:click="showEditUser(user)">
+                      <i class="fa fa-pencil"></i>
+                      <div class="ripple-container"></div>
+                    </button>
+                    <button class="btn btn-just-icon btn-simple" v-on:click="deleteUser(user.email)">
                       <i class="fa fa-trash-o"></i>
                       <div class="ripple-container"></div>
                     </button>
@@ -283,8 +287,88 @@
       </div>
     </div>
   </div>
+<modal name="showEditModal" height="auto" :scrollable=true :adaptive=true :pivotX=0.25 transition="fade">
+  <div class="card" style="box-shadow:none !important;">
+    <div class="card-header" data-background-color="orange">
+      
+      <h4 class="card-title">Edit User</h4>
+    </div>
+    <div class="card-content">
+            <form v-on:submit.prevent = "editUser(current_user)" name="editUserForm" novalidate>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group label-floating is-empty">
+                    <md-fg-input
+                      type="text"
+                      name="username" required
+                      v-model="current_user.username"
+                      label="Username"
+                      :labelFloating=true></md-fg-input>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group label-floating is-empty">
+                    <md-fg-input
+                      type="email"
+                      name="email" required
+                      v-model="current_user.email"
+                      label="Email"
+                      :labelFloating=true></md-fg-input>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group label-floating is-empty">
+                    <md-fg-input
+                      type="phone"
+                      name="phone" required
+                      v-model="current_user.phone"
+                      label="Phone"
+                      :labelFloating=true></md-fg-input>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group label-floating is-empty">
+                    <md-fg-input
+                      type="zone"
+                      name="zone" required
+                      v-model="current_user.zone"
+                      label="Zone"
+                      :labelFloating=true></md-fg-input>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-4 checkbox-radios">
+                    <div class="radio" v-for="gender in genders">
+                      <label>
+                        <input type="radio" name="gender" :value="gender.val" v-model="current_user.sex">
+                        <span class="circle"></span>
+                        <span class="check"></span>{{gender.text}}
+                      </label>
+                    </div>
+                </div>
+              </div>
+              <div class="row" v-show="current_user.error">
+                <div class="col-md-12">
+                  <div class="alert alert-danger">
+                    <b>Error: </b><p v-model="current_user.error">{{current_user.error}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="btn-group">
+                    <button type="submit" class="btn btn-info">Update</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+    </div>
+  </div>
+</modal>
 </div>
-
 </template>
 <script>
 import MdNavTabs from '@/core/components/mdTab/nav-tabs'
@@ -301,6 +385,11 @@ export default {
     const lineSmooth = this.$Chartist.Interpolation.cardinal({ tension: 0 })
     return {
       users: [],
+      current_user: '',
+      genders: [
+        {text:'Male',val:'male'},
+        {text:'Female',val:'female'}
+      ]
     }
   },
 
@@ -316,6 +405,15 @@ export default {
       }, function onError(resp) {
         console.log("Error.... ")
       })
+    },
+    showEditUser(user) {
+      this.current_user = user;
+      // $("#showEditModal").modal("show");
+      this.$modal.show('showEditModal');
+      console.log(user)
+    },
+    editUser(current_user) {
+      console.log(current_user)
     },
     deleteUser(email) {
 
