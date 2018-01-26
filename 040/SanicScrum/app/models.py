@@ -27,7 +27,8 @@ class User(BaseModel):
 	email = CharField(unique = True, index = True)
 	phone = CharField()
 	sex = CharField()
-	zone = TextField()
+	zone = CharField()
+	role = CharField(default="user")
 
 	def verify_passwd(self, passwd):
 		return pbkdf2_sha512.verify(passwd, self.passwd)
