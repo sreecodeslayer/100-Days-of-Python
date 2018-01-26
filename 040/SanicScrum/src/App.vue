@@ -34,19 +34,19 @@ export default {
       return this.sidebarToggled
     }
   },
-
   mounted() {
+    console.log(">>>>>>>")
     this.initMaterial()
   },
 
   updated() {
+    console.log("******")
     this.initMaterial()
   },
 
   methods: {
     initMaterial() {
       $.material.init() // eslint-disable-line
-      $('.selectpicker').selectpicker()
     },
     toggleSideBar() {
       this.sidebarToggled = !this.sidebarToggled

@@ -6,6 +6,7 @@ import VueResource from 'vue-resource'
 import VueSweetAlert from 'vue-sweetalert'
 import VueAuthenticate from 'vue-authenticate'
 import VueAuthorize from 'vue-authorize'
+import VModal from 'vue-js-modal'
 
 import router from './router'
 
@@ -28,11 +29,13 @@ Object.defineProperty(Vue.prototype, '$Chartist', {
   }
 })
 
+
 // Use Core Components
 Vue.use(CoreComponents)
 Vue.use(NotificationPlugin)
 Vue.use(vClickOutside)
 Vue.use(VueResource)
+Vue.use(VModal)
 Vue.use(VueSweetAlert)
 Vue.use(VueAuthenticate,
   {
