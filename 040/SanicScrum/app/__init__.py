@@ -19,7 +19,7 @@ import os
 name = "SanicScrum"
 version = "0.1a"
 
-current_admin_passwd = "5379ae883dfb46e18694"
+current_admin_passwd = "e7ce7267a56b42d4be4c"
 
 app_root = os.path.dirname(__file__)
 static_root = os.path.join(app_root,'static')
@@ -82,6 +82,7 @@ async def create_tables(app, loop):
 		usr.sex = ""
 		usr.phone = ""
 		usr.zone = ""
+		usr.role = "admin"
 
 		new_passwd = uuid4().hex[:20]
 		usr.set_passwd(new_passwd)

@@ -96,6 +96,7 @@
                 <div class="col-md-6">
                     <select
                       class="selectpicker"
+                      ref="gender_select"
                       required
                       v-model="newUser.sex"
                       data-style="btn btn-sm btn-round"
@@ -103,8 +104,9 @@
                       data-size="7">
 
                       <option disabled> Choose gender</option>
-                      <option value="male">Male </option>
-                      <option value="female">Female</option>
+                      <option v-for="gender in genders" v-bind:value="gender.val">{{ gender.text }}</option>
+                      <!-- <option value="male">Male </option>
+                      <option value="female">Female</option> -->
                     </select>
                 </div>
               </div>
@@ -171,6 +173,10 @@ export default {
   data() {
     return {
       showAdminAddUser: false,
+      genders: [
+        {text:'Male',val:'male'},
+        {text:'Female',val:'female'}
+      ],
       profileClasses: ["col-md-12","col-sm-12","col-lg-12"],
       user: {},
       newUser: {
@@ -209,6 +215,9 @@ export default {
         this.newUser.error = response.data.message;
       })
     }
+  },
+  updated() {
+    $(this.$refs.gender_select).selectpicker('refresh')
   },
   created() {
     this.getUserFromLocalStorage();
